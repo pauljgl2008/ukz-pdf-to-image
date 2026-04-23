@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 import { rename } from 'node:fs/promises';
 import { basename, dirname, extname, join, resolve } from 'node:path';
+import { createRequire } from 'node:module';
 import { Command } from 'commander';
 import { convert } from './convert.js';
 import { detectBinaries } from './detect.js';
 import { PdfToImageError } from './errors.js';
 import type { ConvertMode, Strategy } from './types.js';
 
+const { version } = createRequire(import.meta.url)('../../package.json') as { version: string };
+
 const program = new Command();
 
 program
   .name('ukz-pdf-to-image')
   .description('Convert a PDF to PNG without losing resolution')
-  .version('0.1.0');
+  .version(version);
 
 program
   .command('detect')
@@ -28,8 +31,8 @@ program
 
 program
   .option('--pdf <path>', 'Path to the input PDF')
-  .option('--imagen <path>', 'Output image path (use .png for best quality on Windows)')
-  .option('--image <path>', 'Alias for --imagen')
+  .option('--image <path>', 'Output image path (use .png for best quality on Windows)')
+  .option('--imagen <path>', 'Alias for --image')
   .option('-r, --dpi <n>', 'DPI used when rasterizing', '300')
   .option('-m, --mode <mode>', 'raster | extract', 'raster')
   .option('-f, --first <page>', 'First page (1-indexed)')
@@ -38,7 +41,7 @@ program
   .option('--optimize', 'Convert output to indexed-palette PNG (lossless for diagrams, 4-8x smaller)')
   .action(async (opts: Record<string, string | boolean | undefined>) => {
     const pdf = opts.pdf as string | undefined;
-    const out = (opts.imagen ?? opts.image) as string | undefined;
+    const out = (opts.image ?? opts.imagen) as string | undefined;
 
     if (!pdf || !out) {
       program.help();

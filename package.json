@@ -32,7 +32,14 @@
     "rasterize",
     "high-resolution"
   ],
+  "author": "Paúl Guevara",
   "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pauljgl2008/ukz-pdf-to-image"

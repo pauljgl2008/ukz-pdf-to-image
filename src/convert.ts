@@ -1,7 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { detectBinaries } from './detect.js';
-import { NoBinaryAvailableError, PdfToImageError } from './errors.js';
+import { PdfToImageError } from './errors.js';
 import { optimizePngToPalette } from './optimize.js';
 import { runGhostscript } from './strategies/ghostscript.js';
 import { runPdfimages } from './strategies/pdfimages.js';
@@ -138,13 +138,13 @@ async function runForced(
     case 'pdfjs':
       return { strategy, files: await runPdfjs(input, opts) };
     case 'pdftoppm':
-      if (!bins.pdftoppm) throw new NoBinaryAvailableError();
+      if (!bins.pdftoppm) throw new PdfToImageError('pdftoppm not found on PATH. Install Poppler to use this strategy.', 'NO_BINARY');
       return { strategy, files: await runPdftoppm(bins.pdftoppm, input, opts) };
     case 'pdfimages':
-      if (!bins.pdfimages) throw new NoBinaryAvailableError();
+      if (!bins.pdfimages) throw new PdfToImageError('pdfimages not found on PATH. Install Poppler to use this strategy.', 'NO_BINARY');
       return { strategy, files: await runPdfimages(bins.pdfimages, input, opts) };
     case 'ghostscript':
-      if (!bins.ghostscript) throw new NoBinaryAvailableError();
+      if (!bins.ghostscript) throw new PdfToImageError('Ghostscript not found on PATH. Install Ghostscript to use this strategy.', 'NO_BINARY');
       return { strategy, files: await runGhostscript(bins.ghostscript, input, opts) };
     default: {
       const exhaustive: never = strategy;

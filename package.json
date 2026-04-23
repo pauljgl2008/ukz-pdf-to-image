@@ -1,0 +1,54 @@
+{
+  "name": "ukz-pdf-to-image",
+  "version": "0.1.0",
+  "description": "Convert PDFs to PNG without losing resolution. Thin wrapper around Poppler (pdftoppm, pdfimages) and Ghostscript with automatic fallback.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "ukz-pdf-to-image": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "pdf",
+    "png",
+    "image",
+    "convert",
+    "poppler",
+    "ghostscript",
+    "pdftoppm",
+    "pdfimages",
+    "rasterize",
+    "high-resolution"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pauljgl2008/ukz-pdf-to-image"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.99",
+    "commander": "^12.1.0",
+    "pdfjs-dist": "^5.6.205",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  }
+}

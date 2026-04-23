@@ -1,0 +1,8 @@
+src
+test
+tsconfig.json
+*.tsbuildinfo
+.gitignore
+.vscode
+/output
+/test-output
